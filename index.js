@@ -1,7 +1,7 @@
 const path = require('path');
 
 const defaultOutput = 'docs.json';
-const docsMapSuite = (config) => {
+const docsmapSuite = (config) => {
   if (!(config.docsmap && config.docsmap.enable)) return null;
   const self = {};
 
@@ -34,8 +34,8 @@ const docsMapSuite = (config) => {
 
   self.afterBuildDocs = async function afterBuildDocs() {
     if (!self.flatInfos) return;
-    const filename = this.config.docsMap
-      ? this.config.docsMap.output || defaultOutput
+    const filename = this.config.docsmap
+      ? this.config.docsmap.output || defaultOutput
       : defaultOutput;
     await this.fse.writeJSON(path.resolve(this.publicPath, filename), self.flatInfos);
   };
@@ -43,4 +43,4 @@ const docsMapSuite = (config) => {
   return self;
 };
 
-module.exports = docsMapSuite;
+module.exports = docsmapSuite;

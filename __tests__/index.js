@@ -1,20 +1,20 @@
 /* eslint-env jest, node */
 
 const typeMap = any => any;
-const docsMapSuite = require('..');
+const docsmapSuite = require('..');
 
-const docsMap = docsMapSuite({
-  docsMap: {
+const docsmap = docsmapSuite({
+  docsmap: {
     enable: true,
   },
 });
 
-const { afterRead, beforeBuildDocs, afterBuildDocs } = docsMap;
+const { afterRead, beforeBuildDocs, afterBuildDocs } = docsmap;
 const fse = {
   writeJSON: jest.fn(() => Promise.resolve()),
 };
 
-describe('docsMap', () => {
+describe('docsmap', () => {
   describe('afterRead', () => {
     it('returns original context and do nothing with wikic if IS_DOC is falsy', () => {
       const wikic = { typeMap };
@@ -58,7 +58,7 @@ describe('docsMap', () => {
         },
         IS_DOC: true,
       });
-      expect(docsMap.flatInfos).toEqual([
+      expect(docsmap.flatInfos).toEqual([
         {
           title: 'title1',
           address: '/2.html',
@@ -70,7 +70,7 @@ describe('docsMap', () => {
 
   test('beforeBuildDocs', () => {
     beforeBuildDocs();
-    expect(docsMap.flatInfos).toBeFalsy();
+    expect(docsmap.flatInfos).toBeFalsy();
   });
 
   describe('afterBuildDocs', () => {
@@ -79,13 +79,13 @@ describe('docsMap', () => {
         fse,
         publicPath: '/c/a',
         config: {
-          docsMap: {
+          docsmap: {
             output: 'la.json',
           },
         },
       };
       fse.writeJSON.mockClear();
-      docsMap.flatInfos = 'something';
+      docsmap.flatInfos = 'something';
       await afterBuildDocs.call(wikic);
       expect(wikic.fse.writeJSON.mock.calls[0][0]).toBe('/c/a/la.json');
       expect(wikic.fse.writeJSON.mock.calls[0][1]).toBe('something');
@@ -97,7 +97,7 @@ describe('docsMap', () => {
         publicPath: '/c/a',
         config: {},
       };
-      docsMap.flatInfos = 'something';
+      docsmap.flatInfos = 'something';
 
       fse.writeJSON.mockClear();
       await afterBuildDocs.call(wikic);
@@ -105,7 +105,7 @@ describe('docsMap', () => {
       expect(fse.writeJSON.mock.calls[0][1]).toBe('something');
 
       fse.writeJSON.mockClear();
-      wikic.config.docsMap = {};
+      wikic.config.docsmap = {};
       await afterBuildDocs.call(wikic);
       expect(fse.writeJSON.mock.calls[0][0]).toBe('/c/a/docs.json');
     });
@@ -115,12 +115,12 @@ describe('docsMap', () => {
       const wikic = {
         publicPath: '/c/a',
         config: {
-          docsMap: {
+          docsmap: {
             output: 'la.json',
           },
         },
       };
-      docsMap.flatInfos = null;
+      docsmap.flatInfos = null;
       await afterBuildDocs.call(wikic);
       expect(fse.writeJSON).not.toHaveBeenCalled();
     });
