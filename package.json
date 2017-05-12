@@ -1,0 +1,41 @@
+{
+  "name": "wikic-suite-docsmap",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "dgeibi <png.inside@gmail.com>",
+  "description": "Generates searchable json of docs",
+  "scripts": {
+    "test": "jest --coverage",
+    "lint": "eslint .",
+    "format": "prettier-eslint --write './*.js'",
+    "coveralls": "npm run test && cat ./coverage/lcov.info | coveralls"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "files": [
+    "index.js"
+  ],
+  "devDependencies": {
+    "jest": "^20.0.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-config-dgeibi": "github:dgeibi/eslint-config-dgeibi",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-no-async-without-await": "^1.2.0",
+    "coveralls": "^2.12.0",
+    "prettier-eslint-cli": "^3.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wikic/wikic-suite-docsmap.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wikic/wikic-suite-docsmap/issues"
+  },
+  "homepage": "https://github.com/wikic/wikic-suite-docsmap#readme",
+  "keywords": [
+    "wikic"
+  ]
+}
