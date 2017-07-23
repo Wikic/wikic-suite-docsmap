@@ -1,8 +1,8 @@
 const path = require('path');
 
 const defaultOutput = 'docs.json';
-const docsmapSuite = (config) => {
-  if (!(config.docsmap && config.docsmap.enable)) return null;
+const docsmapSuite = (config, wikic) => {
+  if (!config.docsmap || !config.docsmap.enable) return null;
   const self = {};
 
   self.afterRead = function collectInfo(context) {
@@ -14,7 +14,7 @@ const docsmapSuite = (config) => {
     }
     const { types, address, title, hide } = page;
     if (hide) return context;
-    const typesMapped = types.map(this.typeMap);
+    const typesMapped = types.map(wikic.typeMap);
 
     const info = {
       address,
@@ -34,10 +34,8 @@ const docsmapSuite = (config) => {
 
   self.afterBuildDocs = async function afterBuildDocs() {
     if (!self.flatInfos) return;
-    const filename = this.config.docsmap
-      ? this.config.docsmap.output || defaultOutput
-      : defaultOutput;
-    await this.fse.writeJSON(path.resolve(this.publicPath, filename), self.flatInfos);
+    const filename = wikic.config.docsmap.output || defaultOutput;
+    await wikic.fse.writeJSON(path.resolve(wikic.publicPath, filename), self.flatInfos);
   };
 
   return self;
